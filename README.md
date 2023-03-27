@@ -1,4 +1,4 @@
-# Проект infra_sp2
+# Проект "Foodgram"
 [![API for YaMDB project workflow](https://github.com/ash1k-dev/foodgram-project-react/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/ash1k-dev/foodgram-project-react/actions/workflows/main.yml)
 
 
