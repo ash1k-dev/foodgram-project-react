@@ -87,7 +87,7 @@ class Recipe(models.Model):
         verbose_name='Автор'
     )
     name = models.CharField(
-        verbose_name='Название рецепта',
+        verbose_name='Название',
         max_length=200,
         db_index=True
     )
@@ -173,8 +173,8 @@ class ShoppingCart(models.Model):
     )
 
     class Meta:
-        verbose_name = 'Корзина покупок'
-        verbose_name_plural = 'Корзина покупок'
+        verbose_name = 'Корзина'
+        verbose_name_plural = 'Корзина'
         constraints = [
             UniqueConstraint(
                 fields=('user', 'recipe'),

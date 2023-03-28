@@ -3,12 +3,8 @@ from django.contrib.admin import register
 from users.models import Subscribe, User
 
 
-class BaseAdminSettings(admin.ModelAdmin):
-    empty_value_display = '-пусто-'
-    list_filter = ('email', 'username')
-
 @register(User)
-class UsersAdmin(BaseAdminSettings):
+class UsersAdmin(admin.ModelAdmin):
     list_display = (
         'id',
         'username',
@@ -17,7 +13,9 @@ class UsersAdmin(BaseAdminSettings):
         'last_name'
     )
     list_display_links = ('id', 'username')
+    list_filter = ('email', 'username')
     search_fields = ('username', 'email',)
+    empty_value_display = '-пусто-'
 
 
 @register(Subscribe)
