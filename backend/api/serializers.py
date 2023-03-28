@@ -25,7 +25,7 @@ class TagSerializer(ModelSerializer):
     def validate_color(self, color):
         if not re.search(r'^#(?:[0-9a-fA-F]{3}){1,2}$', color):
             raise ValidationError(
-                f'{color} не является hex цветом'
+                detail=f'{color} не является hex цветом'
             )
         return f'{color}'
 
@@ -149,12 +149,12 @@ class RecipeReadSerializer(ModelSerializer):
             'id',
             'tags',
             'author',
-            'ingredients',
-            'is_favorited',
-            'is_in_shopping_cart',
             'name',
             'image',
             'text',
+            'ingredients',
+            'is_favorited',
+            'is_in_shopping_cart',
             'cooking_time',
         )
 
@@ -184,10 +184,10 @@ class RecipeWriteSerializer(ModelSerializer):
             'id',
             'tags',
             'author',
-            'ingredients',
             'name',
             'image',
             'text',
+            'ingredients',
             'cooking_time',
         )
 
