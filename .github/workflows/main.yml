@@ -2,29 +2,6 @@ name: Django-app workflow
 
 on: [push]
 
-#jobs:
-#  tests:
-#    runs-on: ubuntu-latest
-#
-#    steps:
-#      - name: check GitHub branches
-#        uses: actions/checkout@v2
-#
-#      - name: set up Python
-#        uses: actions/setup-python@v2
-#        with:
-#          python-version: 3.7
-#      - name: update pip, install flake8 and dependencies
-#        run: |
-#          python -m pip install --upgrade pip
-#          pip install flake8 pep8-naming flake8-broken-line flake8-return flake8-isort
-#          pip install -r api_yamdb/requirements.txt
-#      - name: Run flake8 and pytest
-#        run: |
-#          python -m flake8
-#          pytest
-
-
 jobs:
   tests:
     name: PEP8 check
@@ -45,6 +22,49 @@ jobs:
       run: |
         python -m flake8 backend          
 
+  build_and_push_backend_to_docker_hub:
+      name: Push backend image to Docker Hub
+      runs-on: ubuntu-latest
+      needs: tests
+      steps:
+        - name: Check out the repo
+          uses: actions/checkout@v2
+        - name: Set up Docker Buildx
+          uses: docker/setup-buildx-action@v1
+        - name: Login to Docker
+          uses: docker/login-action@v1
+          with:
+            username: ${{ secrets.DOCKER_USERNAME }}
+            password: ${{ secrets.DOCKER_PASSWORD }}
+        - name: Push to Docker Hub
+          uses: docker/build-push-action@v2
+          with:
+            context: ./backend
+            push: true
+            tags: ${{ secrets.DOCKER_USERNAME }}/backend:v1
+        - name: Send message if build_and_push_backend_to_docker_hub failed
+
+  build_and_push_frontend_to_docker_hub:
+    name: Push frontend image to Docker Hub
+    runs-on: ubuntu-latest
+    needs: tests
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Login to Docker
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Push to Docker Hub
+        uses: docker/build-push-action@v3
+        with:
+          context: ./frontend
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/frontend:v1
+
   send_message:
     name: Sending message to Telegram
     runs-on: ubuntu-latest
@@ -57,32 +77,7 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: ${{ github.workflow }} успешно выполнен!
 
-#  build_and_push_to_docker_hub:
-#    name: Pushing Docker image to Docker Hub
-#    if: github.ref == 'refs/heads/master'
-#    runs-on: ubuntu-latest
-#    needs: tests
-#    steps:
-#      - name: Check out the repo
-#        uses: actions/checkout@v2
-#
-#      - name: Set up Docker Buildx
-#        uses: docker/setup-buildx-action@v1
-#
-#      - name: Login to Docker
-#        uses: docker/login-action@v1
-#        with:
-#          username: ${{ secrets.DOCKER_USERNAME }}
-#          password: ${{ secrets.DOCKER_PASSWORD }}
-#
-#      - name: Push image to Docker Hub
-#        uses: docker/build-push-action@v2
-#        with:
-#          context: api_yamdb/
-#          file: api_yamdb/Dockerfile
-#          push: true
-#          tags: ${{ secrets.DOCKER_USERNAME }}/api_yamdb:latest
-#
+
 #  deploy:
 #    name: Deploying project on server
 #    if: github.ref == 'refs/heads/master'
@@ -110,14 +105,4 @@ jobs:
 #            echo DB_HOST=${{ secrets.DB_HOST }} >> .env
 #            echo DB_PORT=${{ secrets.DB_PORT }} >> .env
 #            sudo docker-compose up -d
-#  send_message:
-#    name: Sending message to Telegram
-#    runs-on: ubuntu-latest
-#    needs: deploy
-#    steps:
-#      - name: send message
-#        uses: appleboy/telegram-action@master
-#        with:
-#          to: ${{ secrets.TELEGRAM_TO }}
-#          token: ${{ secrets.TELEGRAM_TOKEN }}
-#          message: ${{ github.workflow }} успешно выполнен!
+
