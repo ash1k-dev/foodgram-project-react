@@ -15,6 +15,7 @@ class TagAdmin(admin.ModelAdmin):
     search_fields = ('name',)
     list_filter = ('name',)
 
+
 @register(Ingredient)
 class IngredientAdmin(admin.ModelAdmin):
     list_display = (
@@ -22,6 +23,7 @@ class IngredientAdmin(admin.ModelAdmin):
         'measurement_unit'
     )
     list_filter = ('name',)
+
 
 @register(Recipe)
 class RecipeAdmin(admin.ModelAdmin):
@@ -41,6 +43,7 @@ class RecipeAdmin(admin.ModelAdmin):
 
     added_in_favorites.short_description = 'Количество добавлений в избранное'
 
+
 @register(IngredientInRecipe)
 class IngredientInRecipeAdmin(admin.ModelAdmin):
     list_display = (
@@ -49,11 +52,13 @@ class IngredientInRecipeAdmin(admin.ModelAdmin):
     )
     list_filter = ('ingredient',)
 
+
 @register(Favorite)
 class FavoriteAdmin(admin.ModelAdmin):
     list_display = ('user', 'recipe')
     list_filter = ('user', 'recipe')
     search_fields = ('user', 'recipe')
+
 
 @register(ShoppingCart)
 class ShoppingCartAdmin(admin.ModelAdmin):

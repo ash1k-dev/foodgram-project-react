@@ -148,11 +148,12 @@ class RecipeViewSet(ModelViewSet):
 
         filename = 'shopping_list.txt'
         shopping_list = (
-            f'Список покупок:\n\n'
+            'Список покупок:\n\n'
         )
         for ing in ingredients:
             shopping_list += (
-                f'{ing["ingredient_name"]}: {ing["amount"]} {ing["ingredient__measurement_unit"]}\n'
+                f'{ing["ingredient_name"]}: {ing["amount"]}'
+                f' {ing["ingredient__measurement_unit"]}\n'
             )
         response = HttpResponse(
             shopping_list, content_type='text.txt; charset=utf-8'
