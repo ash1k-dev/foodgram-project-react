@@ -7,9 +7,8 @@ from recipes.models import Ingredient, IngredientInRecipe, Recipe, Tag
 from rest_framework import status
 from rest_framework.fields import IntegerField, SerializerMethodField
 from rest_framework.relations import PrimaryKeyRelatedField
-from rest_framework.serializers import (BooleanField, CharField, ImageField,
-                                        ModelSerializer, ReadOnlyField,
-                                        ValidationError)
+from rest_framework.serializers import (BooleanField, ModelSerializer,
+                                        ReadOnlyField, ValidationError)
 from users.models import Subscribe, User
 
 
