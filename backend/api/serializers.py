@@ -5,10 +5,11 @@ from djoser.serializers import UserCreateSerializer, UserSerializer
 from drf_extra_fields.fields import Base64ImageField
 from recipes.models import Ingredient, IngredientInRecipe, Recipe, Tag
 from rest_framework import status
-from rest_framework.exceptions import ValidationError
 from rest_framework.fields import IntegerField, SerializerMethodField
 from rest_framework.relations import PrimaryKeyRelatedField
-from rest_framework.serializers import ModelSerializer, ReadOnlyField
+from rest_framework.serializers import (BooleanField, CharField, ImageField,
+                                        ModelSerializer, ReadOnlyField,
+                                        ValidationError)
 from users.models import Subscribe, User
 
 
@@ -140,8 +141,8 @@ class RecipeReadSerializer(ModelSerializer):
     author = CustomUserSerializer(read_only=True)
     ingredients = IngredientInRecipeSerializer(many=True)
     image = Base64ImageField()
-    is_favorited = SerializerMethodField(read_only=True)
-    is_in_shopping_cart = SerializerMethodField(read_only=True)
+    is_favorited = BooleanField(read_only=True)
+    is_in_shopping_cart = BooleanField(read_only=True)
 
     class Meta:
         model = Recipe
@@ -158,17 +159,17 @@ class RecipeReadSerializer(ModelSerializer):
             'cooking_time',
         )
 
-    def get_is_favorited(self, recipe):
-        user = self.context.get('request').user
-        if user.is_anonymous:
-            return False
-        return user.favorites.filter(recipe=recipe).exists()
-
-    def get_is_in_shopping_cart(self, recipe):
-        user = self.context.get('request').user
-        if user.is_anonymous:
-            return False
-        return user.shopping_cart.filter(recipe=recipe).exists()
+    # def get_is_favorited(self, recipe):
+    #     user = self.context.get('request').user
+    #     if user.is_anonymous:
+    #         return False
+    #     return user.favorites.filter(recipe=recipe).exists()
+    #
+    # def get_is_in_shopping_cart(self, recipe):
+    #     user = self.context.get('request').user
+    #     if user.is_anonymous:
+    #         return False
+    #     return user.shopping_cart.filter(recipe=recipe).exists()
 
 
 class RecipeWriteSerializer(ModelSerializer):
