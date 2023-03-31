@@ -12,4 +12,3 @@ class UserAdmin(admin.ModelAdmin):
 @register(Subscriptions)
 class SubscriptionsAdmin(admin.ModelAdmin):
     pass
-

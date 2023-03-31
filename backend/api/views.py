@@ -24,7 +24,6 @@ from .serializers import (CustomUserSerializer, FollowSerializer,
 User = get_user_model()
 
 
-
 class TagViewSet(ReadOnlyModelViewSet):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer

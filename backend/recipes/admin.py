@@ -43,4 +43,3 @@ class RecipeIngredientAdmin(admin.ModelAdmin):
 @register(RecipeTag)
 class RecipeTagAdmin(admin.ModelAdmin):
     pass
-
