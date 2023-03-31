@@ -51,22 +51,6 @@ LOCAL_APPS = [
 INSTALLED_APPS = DJANGO_APPS + THIRD_APPS + LOCAL_APPS
 
 
-# INSTALLED_APPS = [
-#     'users.apps.UsersConfig',
-#     'recipes.apps.RecipesConfig',
-#     'api.apps.ApiConfig',
-#     'django.contrib.admin',
-#     'django.contrib.auth',
-#     'django.contrib.contenttypes',
-#     'django.contrib.sessions',
-#     'django.contrib.messages',
-#     'django.contrib.staticfiles',
-#     'rest_framework',
-#     'django_filters',
-#     'rest_framework.authtoken',
-#     'djoser',
-# ]
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
