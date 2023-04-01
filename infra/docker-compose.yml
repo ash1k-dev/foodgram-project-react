@@ -2,7 +2,7 @@ version: '3.3'
 services:
 
   frontend:
-    image: ash1k/frontendtest2:v1
+    image: ash1k/frontend:v1
     volumes:
       - ../frontend/:/app/result_build/
   
@@ -16,7 +16,7 @@ services:
       - ./.env
   
   backend:
-    image: ash1k/backendtest2:v1
+    image: ash1k/backend:v1
     restart: always
     expose:
       - 8000
