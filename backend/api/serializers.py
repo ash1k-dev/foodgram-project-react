@@ -29,7 +29,6 @@ class TagSerializer(ModelSerializer):
         return f'{color}'
 
 
-
 class IngredientSerializer(ModelSerializer):
     class Meta:
         model = Ingredient
