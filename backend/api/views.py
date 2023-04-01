@@ -103,12 +103,11 @@ class RecipeViewSet(ModelViewSet):
         shopping_cart = ShoppingCart.objects.filter(
             user=user, recipe=OuterRef('pk')
         )
-        queryset = Recipe.objects.select_related(
+        return Recipe.objects.select_related(
             'author').prefetch_related('ingredients').annotate(
             is_favorited=Exists(favorites),
             is_in_shopping_cart=Exists(shopping_cart)
         )
-        return queryset
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
