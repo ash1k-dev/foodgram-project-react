@@ -108,7 +108,7 @@ class RecipeViewSet(ModelViewSet):
             is_favorited=Exists(favorites),
             is_in_shopping_cart=Exists(shopping_cart)
         )
-        # return queryset
+        return queryset
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
